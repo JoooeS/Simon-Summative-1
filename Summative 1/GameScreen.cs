@@ -17,6 +17,8 @@ namespace Summative_1
         int colour;
         Random randomNumberGen = new Random();
         Color[] normalColours = new Color[4];
+        bool playerTurn = false;
+        List<int> guesses = new List<int>();
 
 
 
@@ -60,14 +62,15 @@ namespace Summative_1
 
         void ComputerTurn()
         {
-            buttonB.Refresh();
-            buttonR.Refresh();
-            buttonG.Refresh();
-            buttonY.Refresh();
+            guesses.Clear();
+            BlankForm.pattern.Clear();
+            labelMessage.Text = "Computer Turn now ;)";
+
+            for (int i = 0; i < BlankForm.buttons.Count(); i++) { BlankForm.buttons[i].Refresh(); }
 
             patternNumber += 1; //Increasing difficulty
 
-            for (int i = 0; i <= patternNumber; i++)
+            for (int i = 0; i < patternNumber; i++)
             {
                 colour = randomNumberGen.Next(0, 4);
                 BlankForm.pattern.Add(colour);
@@ -78,25 +81,25 @@ namespace Summative_1
                     case 3:
                         BlankForm.buttons[i].BackColor = Color.FromArgb(255, 58, 71, 222);
                         buttonB.Refresh();
-                        Thread.Sleep(250);
+                        Thread.Sleep(500);
 
                         break;
                     case 2:
                         buttonR.BackColor = Color.FromArgb(255, 255, 5, 5);
                         buttonR.Refresh();
-                        Thread.Sleep(250);
+                        Thread.Sleep(500);
 
                         break;
                     case 1:
                         buttonG.BackColor = Color.FromArgb(255, 80, 255, 5);
                         buttonG.Refresh();
-                        Thread.Sleep(250);
+                        Thread.Sleep(500);
 
                         break;
                     case 0:
                         buttonY.BackColor = Color.FromArgb(255, 255, 255, 5);
                         buttonY.Refresh();
-                        Thread.Sleep(250);
+                        Thread.Sleep(500);
 
                         break;
                     default:
@@ -105,21 +108,85 @@ namespace Summative_1
 
                 // ResetColour();
 
-                for (int x = 0; x <= 3; x++) { BlankForm.buttons[x].BackColor = normalColours[x]; }
-
-                buttonB.Refresh();
-                buttonR.Refresh();
-                buttonG.Refresh();
-                buttonY.Refresh();
+                for (int x = 0; x <= 3; x++)
+                {
+                    BlankForm.buttons[x].BackColor = normalColours[x];
+                    BlankForm.buttons[x].Refresh();
+                }
                 Thread.Sleep(250);
             }
 
             
         }
 
+        void PlayerTurn()
+        {
+            if (guesses.Count() == 0)
+            {
+                labelMessage.Text = "Player Turn!";
+            }
+            for (int x = 0; x < guesses.Count(); x++)
+            {
+                if (BlankForm.pattern[x] == guesses[x])
+                {
+                    labelMessage.Text = Convert.ToString(x + 1) + "/" + Convert.ToString(patternNumber) + " correct!";
+                    labelMessage.Refresh();
+
+                    if (x == guesses.Count())
+                    {
+                        labelMessage.Text = "You won. This time >.>";
+                        labelMessage.Refresh();
+                        Thread.Sleep(3000);
+                        playerTurn = false;
+                    }
+                }
+                else
+                {
+                    labelMessage.Text = "Incorrect! Beginning in 3...";
+                    labelMessage.Refresh();
+                    Thread.Sleep(3000);
+                    playerTurn = false;
+                }
+            }
+
+        }
+
         private void GameScreen_Load(object sender, EventArgs e)
         {
-            ComputerTurn();
+            if (playerTurn == false)
+            {
+                ComputerTurn();
+            }
+
+            if (playerTurn == true)
+            {
+                PlayerTurn();
+            }
+        }
+
+        private void buttonY_Click(object sender, EventArgs e)
+        {
+            guesses.Add(0);
+            PlayerTurn();
+
+        }
+
+        private void buttonG_Click(object sender, EventArgs e)
+        {
+            guesses.Add(1);
+            PlayerTurn();
+        }
+
+        private void buttonR_Click(object sender, EventArgs e)
+        {
+            guesses.Add(2);
+            PlayerTurn();
+        }
+
+        private void buttonB_Click(object sender, EventArgs e)
+        {
+            guesses.Add(3);
+            PlayerTurn();
         }
     }
 }

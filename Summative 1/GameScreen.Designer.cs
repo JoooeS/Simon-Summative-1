@@ -44,6 +44,7 @@
             this.buttonY.Size = new System.Drawing.Size(100, 100);
             this.buttonY.TabIndex = 0;
             this.buttonY.UseVisualStyleBackColor = false;
+            this.buttonY.Click += new System.EventHandler(this.buttonY_Click);
             // 
             // buttonG
             // 
@@ -54,6 +55,7 @@
             this.buttonG.Size = new System.Drawing.Size(100, 100);
             this.buttonG.TabIndex = 1;
             this.buttonG.UseVisualStyleBackColor = false;
+            this.buttonG.Click += new System.EventHandler(this.buttonG_Click);
             // 
             // buttonR
             // 
@@ -64,6 +66,7 @@
             this.buttonR.Size = new System.Drawing.Size(100, 100);
             this.buttonR.TabIndex = 2;
             this.buttonR.UseVisualStyleBackColor = false;
+            this.buttonR.Click += new System.EventHandler(this.buttonR_Click);
             // 
             // buttonB
             // 
@@ -74,6 +77,7 @@
             this.buttonB.Size = new System.Drawing.Size(100, 100);
             this.buttonB.TabIndex = 3;
             this.buttonB.UseVisualStyleBackColor = false;
+            this.buttonB.Click += new System.EventHandler(this.buttonB_Click);
             // 
             // labelMessage
             // 
@@ -98,6 +102,7 @@
             this.Controls.Add(this.buttonR);
             this.Controls.Add(this.buttonG);
             this.Controls.Add(this.buttonY);
+            this.DoubleBuffered = true;
             this.Name = "GameScreen";
             this.Size = new System.Drawing.Size(600, 400);
             this.Load += new System.EventHandler(this.GameScreen_Load);
