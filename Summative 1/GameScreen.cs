@@ -13,92 +13,106 @@ namespace Summative_1
 {
     public partial class GameScreen : UserControl
     {
+        #region Variables
+        // Lists
+        List<int> computerPattern = new List<int>();
+        List<int> playerPattern = new List<int>();
+
+        // Arrays
+        Label[] labels = new Label[4];
+        Color[] dimmedColours = new Color[4];
+        Color[] brightColours = new Color[4];
+
+        // Number generator
+        Random randomNumberGen = new Random();
+
+        // Variables
+        public static int roundsCleared = 0; // public variable to be used in game over screen
         int patternNumber = 3;
         int colour;
-        Random randomNumberGen = new Random();
-        Color[] normalColours = new Color[4];
         bool playerTurn = false;
-        List<int> guesses = new List<int>();
-
+        #endregion
 
 
         public GameScreen()
         {
             InitializeComponent();
 
-            // Adding Transparency
-            labelMessage.BackColor = Color.FromArgb(200, 0, 0, 0);
+            // Transparency of Message label
+            labelMessage.BackColor = Color.FromArgb(150, 0, 0, 0);
             labelMessage.ForeColor = Color.FromArgb(10, 150, 150, 150);
 
-            BlankForm.buttons[0] = buttonY;
-            BlankForm.buttons[1] = buttonG;
-            BlankForm.buttons[2] = buttonR;
-            BlankForm.buttons[3] = buttonB;
+            // Assigning labels
+            labels[0] = labelY; // Yellow
+            labels[1] = labelG; // Green
+            labels[2] = labelR; // Red
+            labels[3] = labelB; // Blue
 
-            normalColours[0] = Color.FromArgb(80, 255, 255, 5);
-            normalColours[1] = Color.FromArgb(80, 80, 255, 5);
-            normalColours[2] = Color.FromArgb(80, 255, 5, 5);
-            normalColours[3] = Color.FromArgb(80, 58, 71, 222);
+            // Dimmed colour values
+            dimmedColours[0] = Color.FromArgb(80, 255, 255, 0);
+            dimmedColours[1] = Color.FromArgb(80, 0, 255, 0);
+            dimmedColours[2] = Color.FromArgb(80, 255, 0, 0);
+            dimmedColours[3] = Color.FromArgb(80, 0, 0, 255);
 
-            for (int i = 0; i <= 3; i++) { BlankForm.buttons[i].BackColor = normalColours[i]; }
+            // Bright colour values
+            brightColours[0] = Color.FromArgb(255, 255, 255, 0);
+            brightColours[1] = Color.FromArgb(255, 0, 255, 0);
+            brightColours[2] = Color.FromArgb(255, 255, 0, 0);
+            brightColours[3] = Color.FromArgb(255, 0, 0, 255);
 
-
-            // Program
-            Setup();
-            
-            Thread.Sleep(1000);
-
-            
-
-
-        }
-
-        void Setup()
-        {
-            BlankForm.pattern.Clear();
-            Refresh(); // why?
+            for (int i = 0; i <= 3; i++) // Setting the labels to look "dimmed"
+            {
+                labels[i].BackColor = dimmedColours[i];
+            }
         }
 
 
         void ComputerTurn()
         {
-            guesses.Clear();
-            BlankForm.pattern.Clear();
-            labelMessage.Text = "Computer Turn now ;)";
+            // Clearing player and computer patterns for the next round
+            playerPattern.Clear(); 
+            computerPattern.Clear();
+            labelMessage.Text = "Computer Turn now :D";
+            labelMessage.Refresh();
+            Thread.Sleep(500);
 
-            for (int i = 0; i < BlankForm.buttons.Count(); i++) { BlankForm.buttons[i].Refresh(); }
+            for (int i = 0; i < labels.Count(); i++) // Reset label.backcolors to "dimmed"
+            {
+                labels[i].Refresh();
+            }
 
-            patternNumber += 1; //Increasing difficulty
+            patternNumber += 1; //Increase difficulty by adding one
 
+            // Creation of the pattern using a "for loop"
             for (int i = 0; i < patternNumber; i++)
             {
                 colour = randomNumberGen.Next(0, 4);
-                BlankForm.pattern.Add(colour);
-                labelMessage.Text += " " + BlankForm.pattern[i];
+                computerPattern.Add(colour);
 
-                switch (BlankForm.pattern[i])
+                // Dependent on the colour 
+                switch (computerPattern[i])
                 {
                     case 3:
-                        BlankForm.buttons[i].BackColor = Color.FromArgb(255, 58, 71, 222);
-                        buttonB.Refresh();
+                        labels[3].BackColor = brightColours[3]; // Lights up blue label
+                        labelB.Refresh();
                         Thread.Sleep(500);
 
                         break;
                     case 2:
-                        buttonR.BackColor = Color.FromArgb(255, 255, 5, 5);
-                        buttonR.Refresh();
+                        labels[2].BackColor = brightColours[2]; // Lights up Red label
+                        labelR.Refresh();
                         Thread.Sleep(500);
 
                         break;
                     case 1:
-                        buttonG.BackColor = Color.FromArgb(255, 80, 255, 5);
-                        buttonG.Refresh();
+                        labels[1].BackColor = brightColours[1]; // Lights up Green label
+                        labelG.Refresh();
                         Thread.Sleep(500);
 
                         break;
                     case 0:
-                        buttonY.BackColor = Color.FromArgb(255, 255, 255, 5);
-                        buttonY.Refresh();
+                        labels[0].BackColor = brightColours[0]; // Lights up Yellow label
+                        labelY.Refresh();
                         Thread.Sleep(500);
 
                         break;
@@ -106,87 +120,133 @@ namespace Summative_1
                         break;
                 }
 
-                // ResetColour();
-
-                for (int x = 0; x <= 3; x++)
+                for (int x = 0; x <= 3; x++) // Reset colours back to "dimmed"
                 {
-                    BlankForm.buttons[x].BackColor = normalColours[x];
-                    BlankForm.buttons[x].Refresh();
+                    labels[x].BackColor = dimmedColours[x];
+                    labels[x].Refresh();
                 }
                 Thread.Sleep(250);
             }
 
-            
+            labelMessage.Text = "Player Turn"; // New message
         }
 
-        void PlayerTurn()
+
+        void PlayerCheck()
         {
-            if (guesses.Count() == 0)
+            // Compares computerPattern to the playerPattern
+            for (int x = 0; x < playerPattern.Count(); x++)
             {
-                labelMessage.Text = "Player Turn!";
-            }
-            for (int x = 0; x < guesses.Count(); x++)
-            {
-                if (BlankForm.pattern[x] == guesses[x])
+                // If RIGHT
+                if (computerPattern[x] == playerPattern[x])
                 {
                     labelMessage.Text = Convert.ToString(x + 1) + "/" + Convert.ToString(patternNumber) + " correct!";
                     labelMessage.Refresh();
 
-                    if (x == guesses.Count())
+                    if (x == patternNumber - 1)
                     {
-                        labelMessage.Text = "You won. This time >.>";
-                        labelMessage.Refresh();
-                        Thread.Sleep(3000);
+                        labels[playerPattern[x]].BackColor = dimmedColours[playerPattern[x]];
+                        labels[playerPattern[x]].Refresh();
+
+                        for (int i = 3; i > 0; i--)
+                        {
+                            labelMessage.Text = "Nice. Computer Turn in " + Convert.ToString(i);
+                            labelMessage.Refresh();
+                            Thread.Sleep(1000);
+                        }
                         playerTurn = false;
+                        roundsCleared++;
+                        ComputerTurn();
+                        break;
                     }
                 }
+
+                // If WRONG
                 else
                 {
-                    labelMessage.Text = "Incorrect! Beginning in 3...";
+                    for (int i = 0; i < labels.Count(); i++)
+                    {
+                        labels[i].Visible = false;
+                    }
+                    labelMessage.Text = "...";
                     labelMessage.Refresh();
-                    Thread.Sleep(3000);
-                    playerTurn = false;
-                }
-            }
+                    Thread.Sleep(1500);
+                    labelMessage.Text += " Loser.";
+                    labelMessage.Refresh();
+                    Thread.Sleep(1500);
 
+                    Form f = this.FindForm();
+                    f.Controls.Remove(this);
+
+                    GameOverScreen gos = new GameOverScreen();
+                    f.Controls.Add(gos);
+                    break;
+                }
+
+                if (playerPattern.Count > 0)
+                {
+                    labels[playerPattern[x]].BackColor = dimmedColours[playerPattern[x]];
+                    labels[playerPattern[x]].Refresh();
+                }
+                
+            }
         }
+
+
+        void Clicker(int x)
+        {
+            labels[x].BackColor = brightColours[x];
+            labels[x].Refresh();
+            Thread.Sleep(150);
+            labels[x].BackColor = dimmedColours[x];
+            labels[x].Refresh();
+        }
+
 
         private void GameScreen_Load(object sender, EventArgs e)
         {
-            if (playerTurn == false)
+            Refresh();
+
+            for (int i = 3; i > 0; i--)
             {
-                ComputerTurn();
+                labelMessage.Text = "Computer Turn in " + Convert.ToString(i);
+                labelMessage.Refresh();
+                Thread.Sleep(1000);
             }
 
-            if (playerTurn == true)
-            {
-                PlayerTurn();
-            }
+            ComputerTurn();
         }
 
-        private void buttonY_Click(object sender, EventArgs e)
-        {
-            guesses.Add(0);
-            PlayerTurn();
 
+        private void labelY_Click(object sender, EventArgs e)
+        {
+            Clicker(0);
+            playerPattern.Add(0);
+            PlayerCheck();
         }
 
-        private void buttonG_Click(object sender, EventArgs e)
+
+        private void labelG_Click(object sender, EventArgs e)
         {
-            guesses.Add(1);
-            PlayerTurn();
+            Clicker(1);
+            playerPattern.Add(1);
+            PlayerCheck();
         }
 
-        private void buttonR_Click(object sender, EventArgs e)
+
+        private void labelR_Click(object sender, EventArgs e)
         {
-            guesses.Add(2);
-            PlayerTurn();
+            Clicker(2);
+            playerPattern.Add(2);
+            PlayerCheck();
         }
 
-        private void buttonB_Click(object sender, EventArgs e)
+
+        private void labelB_Click(object sender, EventArgs e)
         {
-            guesses.Add(3);
-            PlayerTurn();
+            Clicker(3);
+            playerPattern.Add(3);
+            PlayerCheck();
         }
     }
 }

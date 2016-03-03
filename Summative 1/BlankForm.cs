@@ -12,11 +12,6 @@ namespace Summative_1
 {
     public partial class BlankForm : Form
     {
-        public static List<int> pattern = new List<int>();
-        public static Button[] buttons = new Button[4];
-
-        public static int timesCleared = 0;
-        
 
         public BlankForm()
         {
@@ -25,8 +20,6 @@ namespace Summative_1
             // Load Main Screen
             MainScreen ms = new MainScreen();
             this.Controls.Add(ms);
-
-            
         }
     }
 }

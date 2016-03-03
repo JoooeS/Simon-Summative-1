@@ -52,6 +52,12 @@
     <Compile Include="BlankForm.Designer.cs">
       <DependentUpon>BlankForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameOverScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GameOverScreen.Designer.cs">
+      <DependentUpon>GameOverScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BlankForm.resx">
       <DependentUpon>BlankForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameOverScreen.resx">
+      <DependentUpon>GameOverScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
@@ -103,6 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SpaceScreenBKG.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ff.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

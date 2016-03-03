@@ -28,56 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonY = new System.Windows.Forms.Button();
-            this.buttonG = new System.Windows.Forms.Button();
-            this.buttonR = new System.Windows.Forms.Button();
-            this.buttonB = new System.Windows.Forms.Button();
             this.labelMessage = new System.Windows.Forms.Label();
+            this.labelG = new System.Windows.Forms.Label();
+            this.labelB = new System.Windows.Forms.Label();
+            this.labelR = new System.Windows.Forms.Label();
+            this.labelY = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // buttonY
-            // 
-            this.buttonY.BackColor = System.Drawing.Color.Yellow;
-            this.buttonY.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonY.Location = new System.Drawing.Point(190, 90);
-            this.buttonY.Name = "buttonY";
-            this.buttonY.Size = new System.Drawing.Size(100, 100);
-            this.buttonY.TabIndex = 0;
-            this.buttonY.UseVisualStyleBackColor = false;
-            this.buttonY.Click += new System.EventHandler(this.buttonY_Click);
-            // 
-            // buttonG
-            // 
-            this.buttonG.BackColor = System.Drawing.Color.Lime;
-            this.buttonG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonG.Location = new System.Drawing.Point(310, 90);
-            this.buttonG.Name = "buttonG";
-            this.buttonG.Size = new System.Drawing.Size(100, 100);
-            this.buttonG.TabIndex = 1;
-            this.buttonG.UseVisualStyleBackColor = false;
-            this.buttonG.Click += new System.EventHandler(this.buttonG_Click);
-            // 
-            // buttonR
-            // 
-            this.buttonR.BackColor = System.Drawing.Color.Red;
-            this.buttonR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonR.Location = new System.Drawing.Point(190, 210);
-            this.buttonR.Name = "buttonR";
-            this.buttonR.Size = new System.Drawing.Size(100, 100);
-            this.buttonR.TabIndex = 2;
-            this.buttonR.UseVisualStyleBackColor = false;
-            this.buttonR.Click += new System.EventHandler(this.buttonR_Click);
-            // 
-            // buttonB
-            // 
-            this.buttonB.BackColor = System.Drawing.Color.SteelBlue;
-            this.buttonB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonB.Location = new System.Drawing.Point(310, 210);
-            this.buttonB.Name = "buttonB";
-            this.buttonB.Size = new System.Drawing.Size(100, 100);
-            this.buttonB.TabIndex = 3;
-            this.buttonB.UseVisualStyleBackColor = false;
-            this.buttonB.Click += new System.EventHandler(this.buttonB_Click);
             // 
             // labelMessage
             // 
@@ -91,17 +47,61 @@
             this.labelMessage.Text = "This is where to put: COMPUTER TURN or PLAYER TURN";
             this.labelMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // labelG
+            // 
+            this.labelG.BackColor = System.Drawing.Color.Green;
+            this.labelG.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelG.ForeColor = System.Drawing.Color.ForestGreen;
+            this.labelG.Location = new System.Drawing.Point(310, 90);
+            this.labelG.Name = "labelG";
+            this.labelG.Size = new System.Drawing.Size(100, 100);
+            this.labelG.TabIndex = 5;
+            this.labelG.Click += new System.EventHandler(this.labelG_Click);
+            // 
+            // labelB
+            // 
+            this.labelB.BackColor = System.Drawing.Color.Blue;
+            this.labelB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelB.ForeColor = System.Drawing.Color.ForestGreen;
+            this.labelB.Location = new System.Drawing.Point(310, 210);
+            this.labelB.Name = "labelB";
+            this.labelB.Size = new System.Drawing.Size(100, 100);
+            this.labelB.TabIndex = 6;
+            this.labelB.Click += new System.EventHandler(this.labelB_Click);
+            // 
+            // labelR
+            // 
+            this.labelR.BackColor = System.Drawing.Color.Red;
+            this.labelR.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelR.ForeColor = System.Drawing.Color.ForestGreen;
+            this.labelR.Location = new System.Drawing.Point(190, 210);
+            this.labelR.Name = "labelR";
+            this.labelR.Size = new System.Drawing.Size(100, 100);
+            this.labelR.TabIndex = 7;
+            this.labelR.Click += new System.EventHandler(this.labelR_Click);
+            // 
+            // labelY
+            // 
+            this.labelY.BackColor = System.Drawing.Color.Yellow;
+            this.labelY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelY.ForeColor = System.Drawing.Color.ForestGreen;
+            this.labelY.Location = new System.Drawing.Point(190, 90);
+            this.labelY.Name = "labelY";
+            this.labelY.Size = new System.Drawing.Size(100, 100);
+            this.labelY.TabIndex = 8;
+            this.labelY.Click += new System.EventHandler(this.labelY_Click);
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Summative_1.Properties.Resources.SpaceScreenBKG;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.labelY);
+            this.Controls.Add(this.labelR);
+            this.Controls.Add(this.labelB);
+            this.Controls.Add(this.labelG);
             this.Controls.Add(this.labelMessage);
-            this.Controls.Add(this.buttonB);
-            this.Controls.Add(this.buttonR);
-            this.Controls.Add(this.buttonG);
-            this.Controls.Add(this.buttonY);
             this.DoubleBuffered = true;
             this.Name = "GameScreen";
             this.Size = new System.Drawing.Size(600, 400);
@@ -111,11 +111,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonY;
-        private System.Windows.Forms.Button buttonG;
-        private System.Windows.Forms.Button buttonR;
-        private System.Windows.Forms.Button buttonB;
         private System.Windows.Forms.Label labelMessage;
+        private System.Windows.Forms.Label labelG;
+        private System.Windows.Forms.Label labelB;
+        private System.Windows.Forms.Label labelR;
+        private System.Windows.Forms.Label labelY;
     }
 }
