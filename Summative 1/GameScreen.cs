@@ -1,4 +1,18 @@
-﻿using System;
+﻿/// 
+/// Program: Simon Says Game - Summative 1
+/// 
+/// Description: The program will repeatedly create a pattern for the player to follow
+///              and will continue until the player gets the computer pattern wrong.
+///              The program only requires clicking and will display the accomplishment
+///              of the player (Score).
+/// 
+/// Class: ICS4U
+/// Date Started: Approximately February 2016
+/// Created by: Joe S
+/// 
+
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -8,6 +22,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace Summative_1
 {
@@ -17,6 +32,9 @@ namespace Summative_1
         // Lists
         List<int> computerPattern = new List<int>();
         List<int> playerPattern = new List<int>();
+
+        // Sound
+        SoundPlayer sf = new SoundPlayer(Properties.Resources.Press_SK);
 
         // Arrays
         Label[] labels = new Label[4];
@@ -28,7 +46,7 @@ namespace Summative_1
 
         // Variables
         public static int roundsCleared = 0; // public variable to be used in game over screen
-        int patternNumber = 3;
+        int patternNumber = 0;
         int colour;
         bool playerTurn = false;
         #endregion
@@ -66,7 +84,23 @@ namespace Summative_1
             }
         }
 
+        private void GameScreen_Load(object sender, EventArgs e)
+        {
+            Refresh();
 
+            for (int i = 3; i > 0; i--)
+            {
+                labelMessage.Text = "Computer Turn in " + Convert.ToString(i);
+                labelMessage.Refresh();
+                Thread.Sleep(1000);
+            }
+
+            ComputerTurn();
+        }
+
+        /// <summary>
+        /// Creates a computer pattern to display to the player while completing various minor changes
+        /// </summary>
         void ComputerTurn()
         {
             // Clearing player and computer patterns for the next round
@@ -95,24 +129,28 @@ namespace Summative_1
                     case 3:
                         labels[3].BackColor = brightColours[3]; // Lights up blue label
                         labelB.Refresh();
+                        sf.Play();
                         Thread.Sleep(500);
 
                         break;
                     case 2:
                         labels[2].BackColor = brightColours[2]; // Lights up Red label
                         labelR.Refresh();
+                        sf.Play();
                         Thread.Sleep(500);
 
                         break;
                     case 1:
                         labels[1].BackColor = brightColours[1]; // Lights up Green label
                         labelG.Refresh();
+                        sf.Play();
                         Thread.Sleep(500);
 
                         break;
                     case 0:
                         labels[0].BackColor = brightColours[0]; // Lights up Yellow label
                         labelY.Refresh();
+                        sf.Play();
                         Thread.Sleep(500);
 
                         break;
@@ -131,7 +169,9 @@ namespace Summative_1
             labelMessage.Text = "Player Turn"; // New message
         }
 
-
+        /// <summary>
+        /// Method to compare player pattern to computer pattern
+        /// </summary>
         void PlayerCheck()
         {
             // Compares computerPattern to the playerPattern
@@ -192,29 +232,18 @@ namespace Summative_1
             }
         }
 
-
+        /// <summary>
+        /// Method to visually indicate to the player that "x" button has been pressed
+        /// </summary>
+        /// <param name="x">Corresponds to a colour</param>
         void Clicker(int x)
         {
             labels[x].BackColor = brightColours[x];
             labels[x].Refresh();
+            sf.Play();
             Thread.Sleep(150);
             labels[x].BackColor = dimmedColours[x];
             labels[x].Refresh();
-        }
-
-
-        private void GameScreen_Load(object sender, EventArgs e)
-        {
-            Refresh();
-
-            for (int i = 3; i > 0; i--)
-            {
-                labelMessage.Text = "Computer Turn in " + Convert.ToString(i);
-                labelMessage.Refresh();
-                Thread.Sleep(1000);
-            }
-
-            ComputerTurn();
         }
 
 
