@@ -31,7 +31,9 @@ namespace Summative_1
         #region Variables
         // Lists
         List<int> computerPattern = new List<int>();
-        List<int> playerPattern = new List<int>();
+        //List<int> playerPattern = new List<int>();
+        int playerLength = 0;
+        int playerColour;
 
         // Sound
         SoundPlayer sf = new SoundPlayer(Properties.Resources.Press_SK);
@@ -46,7 +48,7 @@ namespace Summative_1
 
         // Variables
         public static int roundsCleared = 0; // public variable to be used in game over screen
-        int patternNumber = 0;
+        int patternNumber = 1;
         int colour;
         bool playerTurn = false;
         #endregion
@@ -104,7 +106,8 @@ namespace Summative_1
         void ComputerTurn()
         {
             // Clearing player and computer patterns for the next round
-            playerPattern.Clear(); 
+            //playerPattern.Clear(); 
+            playerLength = 0;
             computerPattern.Clear();
             labelMessage.Text = "Computer Turn now :D";
             labelMessage.Refresh();
@@ -174,61 +177,55 @@ namespace Summative_1
         /// </summary>
         void PlayerCheck()
         {
-            // Compares computerPattern to the playerPattern
-            for (int x = 0; x < playerPattern.Count(); x++)
+            // If RIGHT
+            if (computerPattern[playerLength] == playerColour)
             {
-                // If RIGHT
-                if (computerPattern[x] == playerPattern[x])
-                {
-                    labelMessage.Text = Convert.ToString(x + 1) + "/" + Convert.ToString(patternNumber) + " correct!";
-                    labelMessage.Refresh();
+                playerLength++;
+                labelMessage.Text = Convert.ToString(playerLength) + "/" + Convert.ToString(patternNumber) + " correct!";
+                labelMessage.Refresh();
 
-                    if (x == patternNumber - 1)
+                if (playerLength == patternNumber)
+                {
+                    labels[playerColour].BackColor = dimmedColours[playerColour];
+                    labels[playerColour].Refresh();
+
+                    for (int i = 3; i > 0; i--)
                     {
-                        labels[playerPattern[x]].BackColor = dimmedColours[playerPattern[x]];
-                        labels[playerPattern[x]].Refresh();
-
-                        for (int i = 3; i > 0; i--)
-                        {
-                            labelMessage.Text = "Nice. Computer Turn in " + Convert.ToString(i);
-                            labelMessage.Refresh();
-                            Thread.Sleep(1000);
-                        }
-                        playerTurn = false;
-                        roundsCleared++;
-                        ComputerTurn();
-                        break;
+                        labelMessage.Text = "Nice. Computer Turn in " + Convert.ToString(i);
+                        labelMessage.Refresh();
+                        Thread.Sleep(1000);
                     }
+                    playerTurn = false;
+                    roundsCleared++;
+                    ComputerTurn();
                 }
+            }
 
-                // If WRONG
-                else
+            // If WRONG
+            else
+            {
+                for (int i = 0; i < labels.Count(); i++)
                 {
-                    for (int i = 0; i < labels.Count(); i++)
-                    {
-                        labels[i].Visible = false;
-                    }
-                    labelMessage.Text = "...";
-                    labelMessage.Refresh();
-                    Thread.Sleep(1500);
-                    labelMessage.Text += " Loser.";
-                    labelMessage.Refresh();
-                    Thread.Sleep(1500);
-
-                    Form f = this.FindForm();
-                    f.Controls.Remove(this);
-
-                    GameOverScreen gos = new GameOverScreen();
-                    f.Controls.Add(gos);
-                    break;
+                    labels[i].Visible = false;
                 }
+                labelMessage.Text = "...";
+                labelMessage.Refresh();
+                Thread.Sleep(1500);
+                labelMessage.Text += " Loser.";
+                labelMessage.Refresh();
+                Thread.Sleep(1500);
 
-                if (playerPattern.Count > 0)
-                {
-                    labels[playerPattern[x]].BackColor = dimmedColours[playerPattern[x]];
-                    labels[playerPattern[x]].Refresh();
-                }
-                
+                Form f = this.FindForm();
+                f.Controls.Remove(this);
+
+                GameOverScreen gos = new GameOverScreen();
+                f.Controls.Add(gos);
+            }
+
+            if (playerLength > 0)
+            {
+                labels[playerColour].BackColor = dimmedColours[playerColour];
+                labels[playerColour].Refresh();
             }
         }
 
@@ -250,7 +247,7 @@ namespace Summative_1
         private void labelY_Click(object sender, EventArgs e)
         {
             Clicker(0);
-            playerPattern.Add(0);
+            playerColour = 0;
             PlayerCheck();
         }
 
@@ -258,7 +255,7 @@ namespace Summative_1
         private void labelG_Click(object sender, EventArgs e)
         {
             Clicker(1);
-            playerPattern.Add(1);
+            playerColour = 1;
             PlayerCheck();
         }
 
@@ -266,7 +263,7 @@ namespace Summative_1
         private void labelR_Click(object sender, EventArgs e)
         {
             Clicker(2);
-            playerPattern.Add(2);
+            playerColour = 2;
             PlayerCheck();
         }
 
@@ -274,7 +271,7 @@ namespace Summative_1
         private void labelB_Click(object sender, EventArgs e)
         {
             Clicker(3);
-            playerPattern.Add(3);
+            playerColour = 3;
             PlayerCheck();
         }
     }
